@@ -848,7 +848,152 @@ DROP USER B
 
 
 
+## MySQL备份
+
+为什么要备份：
+
+- 保证重要的数据不丢失
+
+- 数据转移
+
+MySQL数据库备份的方式
+
+- 直接拷贝物理文件
+
+- 使用sqlyog可视化导出
+
+- 使用命令行导出mysqldump命令行使用
+
+  ```sql
+  # mysqldump -h 主机 -u 用户名 -p 密码 数据库 表1 表2 > 物理磁盘位置/文件名
+  mysqldump -hlocalhost -uroot -p123456 school student >D:/a.sql
+  
+  # 导入
+  source d:/
+  ```
+
+  
+
+## 规范数据库设计
+
+当数据库比较复杂的时候，我们就需要设计了
+
+糟糕的数据库设计：
+
+- 数据冗余，浪费空间
+- 数据库插入和删除都会麻烦、异常（不使用物理外键）
+- 程序的性能差
+
+
+
 ## 数据库的归约，三大范式
+
+### 第一范式
+
+原子性：保证每一列不可再分
+
+#### 第二范式
+
+满足第一范式
+
+每张表只描述一件事情
+
+#### 第三范式
+
+每一列数据都和主键直接相关，而不能间接相关
+
+
+
+阿里：关联的表不得超过三张
+
+性能更为重要
 
 # ***JDBC***
 
+用java操作数据库
+
+java操作数据库的规范
+
+```java
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class Demo {
+    public static void main(String[] args) throws ClassNotFoundException {
+        Class.forName("com.mysql.jdbc.Driver");
+        String url = "jdbc:mysql://localhost:3306/jdbcstudy?useUnicode=true&characterEncoding=utf8&useSSL=true";
+        String username = "root";
+        String password = "123456";
+
+        Connection connection = DriverManager.getConnection(url,username,password);
+        Statement statement = connection.createStatement();
+
+        String sql = "SELECT * FROM users";
+
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        while(resultSet.next()){
+
+        }
+
+        resultSet.close();
+        statement.close();
+        connection.close();
+    }
+}
+
+```
+
+> 步骤：
+>
+> 加载驱动
+>
+> 连接数据库DriverManager
+>
+> 获得返回的结果
+>
+> 释放连接 
+>
+> ![截屏2023-11-08 17.29.04](/Users/wjord/Library/Application Support/typora-user-images/截屏2023-11-08 17.29.04.png)
+>
+> ![截屏2023-11-08 17.29.54](/Users/wjord/Library/Application Support/typora-user-images/截屏2023-11-08 17.29.54.png)
+>
+> ![截屏2023-11-08 17.32.27](/Users/wjord/Library/Application Support/typora-user-images/截屏2023-11-08 17.32.27.png) 
+>
+> ![截屏2023-11-08 17.36.59](/Users/wjord/Library/Application Support/typora-user-images/截屏2023-11-08 17.36.59.png)
+
+![截屏2023-11-08 19.59.00](/Users/wjord/Library/Application Support/typora-user-images/截屏2023-11-08 19.59.00.png)
+
+![截屏2023-11-08 19.59.58](/Users/wjord/Library/Application Support/typora-user-images/截屏2023-11-08 19.59.58.png)
+
+![截屏2023-11-08 20.00.37](/Users/wjord/Library/Application Support/typora-user-images/截屏2023-11-08 20.00.37.png)
+
+![截屏2023-11-08 20.01.13](/Users/wjord/Library/Application Support/typora-user-images/截屏2023-11-08 20.01.13.png)
+
+![截屏2023-11-08 20.01.33](/Users/wjord/Library/Application Support/typora-user-images/截屏2023-11-08 20.01.33.png)
+
+
+
+> 代码实现：
+>
+> 提取工具类
+>
+> 编写增删改的方法，`excuteUpdate`
+>
+> 固定模版（增删改）
+>
+> ![](/Users/wjord/Library/Application Support/typora-user-images/截屏2023-11-08 20.32.53.png)
+>
+> 编写查的方法![截屏2023-11-08 20.41.10](/Users/wjord/Library/Application Support/typora-user-images/截屏2023-11-08 20.41.10.png)
+
+
+
+## SQL注入问题![截屏2023-11-08 20.48.28](/Users/wjord/Library/Application Support/typora-user-images/截屏2023-11-08 20.48.28.png)
+
+## PreparedStatment
+
+preparedStatement可以防止sql注入，效率更高![截屏2023-11-08 21.04.17](/Users/wjord/Library/Application Support/typora-user-images/截屏2023-11-08 21.04.17.png)
+
+![截屏2023-11-08 21.16.46](/Users/wjord/Library/Application Support/typora-user-images/截屏2023-11-08 21.16.46.png)
