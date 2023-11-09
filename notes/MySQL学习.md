@@ -997,3 +997,31 @@ public class Demo {
 preparedStatement可以防止sql注入，效率更高![截屏2023-11-08 21.04.17](/Users/wjord/Library/Application Support/typora-user-images/截屏2023-11-08 21.04.17.png)
 
 ![截屏2023-11-08 21.16.46](/Users/wjord/Library/Application Support/typora-user-images/截屏2023-11-08 21.16.46.png)
+
+## 事务(Transaction)
+
+![截屏2023-11-09 09.53.52](/Users/wjord/Library/Application Support/typora-user-images/截屏2023-11-09 09.53.52.png)
+
+## 数据库连接池
+
+数据库连接--执行完毕--释放
+
+连接--释放 十分浪费系统资源
+
+**磁化技术：准备一些预先的资源，过来就连接预先准备好的**
+
+编写连接池，实现一个接口DATASOURCE
+
+> 开源数据源：
+>
+> DBCP
+>
+> C3P0
+>
+> Druid：阿里
+
+使用这些数据库连接源后，我们在项目中就不需要编写连接数据库的代码
+
+> DBCP
+
+#### (完结撒花)
