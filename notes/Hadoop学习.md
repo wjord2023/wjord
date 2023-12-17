@@ -68,3 +68,69 @@ Linux操作系统：Linux Kernel + GNU软件及系统软件 + 必要的应用程
 
 桌面版：Ubuntu 企业服务器版：Redhat（商业版）、Centos（社区版）
 
+
+
+# Hadoop
+
+分布式数据存储、分布式数据计算、分布式资源调度为一体
+
+Hadoop是一个整体，其内部还细分为三个功能组件：
+
+**HDFS** 可以构建分布式文件系统用于数据存储
+
+**MapReduce** 提供编程接口供开发分布式计算程序
+
+**YARN** 资源调度组件
+
+Hadoop创始人 Doug Cutting
+
+Google三篇论文：
+
+《The Google file System》谷歌分布式文件系统GFS
+
+《MapReduce: Simplified Data processing on Large Clusters》谷歌分布式计算框架MapReduce
+
+《Bigtable: A Distribute Storage System for Structured Data》谷歌结构化数据存储系统
+
+## Hadoop HDFS
+
+Hadoop Distributed File System
+
+去中心化模式：没有明确的中心，众多服务器之间基于特点规则进行同步协调
+
+中心化模式：以一台服务器为中心，基于中心节点分配工作
+
+HDFS集群：主角色：NameNode，从角色：DataNode，主角色辅助角色：SecondaryNameNode
+
+NameNode：
+
+- HDFS系统的主角色，是一个独立的进程
+- 负责管理HDFS整个文件系统
+- 负责管理DataNode
+
+DataNode：
+
+- HDFS从角色，是一个独立的进程
+- 主要负责数据的存储，即存入数据和取出数据
+
+SecondaryNameNode：
+
+- NameNode的辅助，是一个独立的进程
+- 主要帮助NameNode完成元数据整理工作
+
+> start-dfs.sh一键启动HDFS集群
+>
+> 启动secondaryNameNode
+>
+> 读取core-site.xml内容（fs.defaultFS），确认NameNode所在机器，启动NameNode
+>
+> 读取workers内容，确认DataNode所在机器，启动全部DataNode
+>
+> stop-dfs.sh一键关闭HDFS集群
+
+> 控制单进程的启停
+>
+> hadoop-daemon.sh (start|status|stop) (namenode|secondarynamenode|datanode)
+>
+> hdfs --demon (start|status|stop) (namenode|secondarynamenode|datanode)
+
