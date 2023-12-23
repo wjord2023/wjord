@@ -15,7 +15,7 @@ public interface BuyerService {
 
     Buyer selectBuyerByName(String buyerName);
 
-    List<Buyer> selectAllBuyers();
+    List<Buyer> selectAllBuyers(int page, int pageSize);
 
     int selectTotalBuyerCount();
 

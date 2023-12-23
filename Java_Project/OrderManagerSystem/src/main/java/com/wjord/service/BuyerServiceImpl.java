@@ -109,7 +109,8 @@ public class BuyerServiceImpl implements BuyerService {
     }
 
     /**
-     * TODO：原本我希望可以进行一个询问是否确认要删除，但是发现scanner没办法进行输入不知道是不是spring框架的原因，不过正常是用客户端传数据了，就不搞了
+     * TODO：原本我希望可以进行一个询问是否确认要删除，但是发现scanner没办法进行输入不知道是不是spring框架的原因，
+     *      不过正常是用客户端传数据了，就不搞了
      *
      * @param buyerPhone
      */
@@ -149,8 +150,13 @@ public class BuyerServiceImpl implements BuyerService {
     }
 
     @Override
-    public List<Buyer> selectAllBuyers() {
-        List<Buyer> selected = buyerDao.selectAllBuyers();
+    public List<Buyer> selectAllBuyers(int page, int pageSize) {
+        int allBuyerCount = buyerDao.selectTotalBuyerCount();
+        if (page < 1 || pageSize < 1 || (page-1)*pageSize > allBuyerCount) {
+            System.out.println("查询失败,请输入正确的页码和页面大小");
+            return null;
+        }
+        List<Buyer> selected = buyerDao.selectAllBuyers(page, pageSize);
         return selected;
     }
 

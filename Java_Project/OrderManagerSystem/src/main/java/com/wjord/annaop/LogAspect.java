@@ -6,7 +6,10 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
 /**
- * @Description: AOP面向切面编程，其实我一般不看这个，但是学了还是写一下吧，毕竟我不看，AI可以看
+ * @Description: AOP面向切面编程，其实我一般不看这个日志，但是学了还是写一下吧，毕竟我不看，copilot可以看
+ *              好处是可以在不改变原有代码的情况下，增加一些功能，比如日志，权限校验，事务等
+ * @Aspect: 声明这是一个切面类
+ * @Around: 环绕通知，可以在目标方法执行前后执行一些操作
  * @Author WJORD
  */
 @Aspect

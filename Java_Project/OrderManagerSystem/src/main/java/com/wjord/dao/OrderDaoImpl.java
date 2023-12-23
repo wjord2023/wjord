@@ -43,9 +43,10 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public List<Order> selectAllOrders() {
-        String sql = "select order_code, product_code, buyer_phone, order_price, order_amount, create_time, update_time from order_info";
-        return jdbcTemplate.query(sql, orderMapper);
+    public List<Order> selectAllOrders(int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        String sql = "select order_code, product_code, buyer_phone, order_price, order_amount, create_time, update_time from order_info limit ? offset ?";
+        return jdbcTemplate.query(sql, orderMapper, pageSize, offset);
     }
 
     @Override
@@ -79,16 +80,18 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public List<Order> selectOrdersByProductCode(String productCode) {
-        String sql = "select order_code, product_code, buyer_phone, order_price, order_amount, create_time, update_time from order_info where product_code = ?";
-        List<Order> query = jdbcTemplate.query(sql, orderMapper, productCode);
+    public List<Order> selectOrdersByProductCode(String productCode, int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        String sql = "select order_code, product_code, buyer_phone, order_price, order_amount, create_time, update_time from order_info where product_code = ? limit ? offset ?";
+        List<Order> query = jdbcTemplate.query(sql, orderMapper, productCode, pageSize, offset);
         return query.isEmpty() ? null : query;
     }
 
     @Override
-    public List<Order> selectOrdersByBuyerPhone(String buyerPhone) {
-        String sql = "select order_code, product_code, buyer_phone, order_price, order_amount, create_time, update_time from order_info where buyer_phone = ?";
-        List<Order> query = jdbcTemplate.query(sql, orderMapper, buyerPhone);
+    public List<Order> selectOrdersByBuyerPhone(String buyerPhone, int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        String sql = "select order_code, product_code, buyer_phone, order_price, order_amount, create_time, update_time from order_info where buyer_phone = ? limit ? offset ?";
+        List<Order> query = jdbcTemplate.query(sql, orderMapper, buyerPhone, pageSize, offset);
         return query.isEmpty() ? null : query;
     }
 
@@ -106,16 +109,18 @@ public class OrderDaoImpl implements OrderDao {
 
     //实现对订单的排序，按照订单价格降序排列,如果订单价格相同，按照创建时间降序排列
     @Override
-    public List<Order> sortOrderByPrice() {
-        String sql = "select order_code, product_code, buyer_phone, order_price, order_amount, create_time, update_time from order_info order by order_price desc, create_time desc";
-        List<Order> query = jdbcTemplate.query(sql, orderMapper);
+    public List<Order> sortOrderByPrice(int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        String sql = "select order_code, product_code, buyer_phone, order_price, order_amount, create_time, update_time from order_info order by order_price desc, create_time desc limit ? offset ?";
+        List<Order> query = jdbcTemplate.query(sql, orderMapper, pageSize, offset);
         return query.isEmpty() ? null : query;
     }
 
     @Override
-    public List<Order> sortOrderByUpdateTime() {
-        String sql = "select order_code, product_code, buyer_phone, order_price, order_amount, create_time, update_time from order_info order by update_time desc";
-        List<Order> query = jdbcTemplate.query(sql, orderMapper);
+    public List<Order> sortOrderByUpdateTime(int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        String sql = "select order_code, product_code, buyer_phone, order_price, order_amount, create_time, update_time from order_info order by update_time desc limit ? offset ?";
+        List<Order> query = jdbcTemplate.query(sql, orderMapper, pageSize, offset);
         return query.isEmpty() ? null : query;
     }
 }

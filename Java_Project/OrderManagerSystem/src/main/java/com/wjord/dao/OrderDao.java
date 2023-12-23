@@ -13,7 +13,7 @@ public interface OrderDao {
 
     Order selectOrderByCode(String orderCode);
 
-    List<Order> selectAllOrders();
+    List<Order> selectAllOrders(int page, int pageSize);
 
     int selectTotalOrderCount();
 
@@ -26,16 +26,16 @@ public interface OrderDao {
     int selectTotalOrderCountByBuyerPhone(String buyerPhone);
 
 
-    List<Order> selectOrdersByProductCode(String productCode);
+    List<Order> selectOrdersByProductCode(String productCode, int page, int pageSize);
 
-    List<Order> selectOrdersByBuyerPhone(String buyerPhone);
+    List<Order> selectOrdersByBuyerPhone(String buyerPhone, int page, int pageSize);
 
     void deleteOrderByProductCode(String productCode);
 
     void deleteOrderByBuyerPhone(String buyerPhone);
 
-    List<Order> sortOrderByPrice();
+    List<Order> sortOrderByPrice(int page, int pageSize);
 
-    List<Order> sortOrderByUpdateTime();
+    List<Order> sortOrderByUpdateTime(int page, int pageSize);
 
 }

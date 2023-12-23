@@ -196,8 +196,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> selectAllOrders() {
-        List<Order> orders = orderDao.selectAllOrders();
+    public List<Order> selectAllOrders(int page, int pageSize) {
+        List<Order> orders = orderDao.selectAllOrders(page, pageSize);
         return orders;
     }
 
@@ -219,12 +219,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public int selectTotalOrderCountByProductName(String productName) {
+        int allProductCount = productDao.selectTotalProductCount();
         if (productDao.selectProductByName(productName) == null) {
             System.out.println("请输入正确的产品名");
             return 0;
         }
         String productCode = productDao.selectProductByName(productName).getProductCode();
-        List<Order> orders = orderDao.selectOrdersByProductCode(productCode);
+        List<Order> orders = orderDao.selectOrdersByProductCode(productCode, 1, allProductCount);
         return orders.size();
     }
 
@@ -239,7 +240,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> selectOrdersByProductName(String productName) {
+    public List<Order> selectOrdersByProductName(String productName, int page, int pageSize) {
+        int allOrderCount = orderDao.selectTotalOrderCount();
+        if (page < 1 || pageSize < 1 || (page - 1) * pageSize > allOrderCount) {
+            System.out.println("查询失败,请输入正确的页码和页面大小");
+            return null;
+        }
         if (productDao.selectProductByName(productName) != null) {
             order.setProductCode(productDao.selectProductByName(productName).getProductCode());
         } else {
@@ -251,39 +257,59 @@ public class OrderServiceImpl implements OrderService {
             return null;
         }
         String productCode = productDao.selectProductByName(productName).getProductCode();
-        List<Order> orders = orderDao.selectOrdersByProductCode(productCode);
+        List<Order> orders = orderDao.selectOrdersByProductCode(productCode, page, pageSize);
         return orders;
     }
 
     @Override
-    public List<Order> selectOrdersByProductCode(String productCode) {
+    public List<Order> selectOrdersByProductCode(String productCode, int page, int pageSize) {
+        int allOrderCount = orderDao.selectTotalOrderCount();
+        if (page < 1 || pageSize < 1 || (page - 1) * pageSize > allOrderCount) {
+            System.out.println("查询失败,请输入正确的页码和页面大小");
+            return null;
+        }
         if (!isValidProductCode(productCode)) {
             System.out.println("查询失败,请输入正确的产品号");
             return null;
         }
-        List<Order> selected = orderDao.selectOrdersByProductCode(productCode);
+        List<Order> selected = orderDao.selectOrdersByProductCode(productCode, page, pageSize);
         return selected;
     }
 
     @Override
-    public List<Order> selectOrdersByBuyerPhone(String buyerPhone) {
+    public List<Order> selectOrdersByBuyerPhone(String buyerPhone, int page, int pageSize) {
+        int allOrderCount = orderDao.selectTotalOrderCount();
+        if (page < 1 || pageSize < 1 || (page - 1) * pageSize > allOrderCount) {
+            System.out.println("查询失败,请输入正确的页码和页面大小");
+            return null;
+        }
         if (!isValidPhoneNumber(buyerPhone)) {
             System.out.println("查询失败,请输入正确的手机号码");
             return null;
         }
-        List<Order> selected = orderDao.selectOrdersByBuyerPhone(buyerPhone);
+        List<Order> selected = orderDao.selectOrdersByBuyerPhone(buyerPhone, page, pageSize);
         return selected;
     }
 
     @Override
-    public List<Order> selectSortedOrderByPrice() {
-        List<Order> orders = orderDao.sortOrderByPrice();
+    public List<Order> selectSortedOrderByPrice(int page, int pageSize) {
+        int allOrderCount = orderDao.selectTotalOrderCount();
+        if (page < 1 || pageSize < 1 || (page - 1) * pageSize > allOrderCount) {
+            System.out.println("查询失败,请输入正确的页码和页面大小");
+            return null;
+        }
+        List<Order> orders = orderDao.sortOrderByPrice(page, pageSize);
         return orders;
     }
 
     @Override
-    public List<Order> selectSortedOrderByUpdateTime() {
-        List<Order> orders = orderDao.sortOrderByUpdateTime();
+    public List<Order> selectSortedOrderByUpdateTime(int page, int pageSize) {
+        int allOrderCount = orderDao.selectTotalOrderCount();
+        if (page < 1 || pageSize < 1 || (page - 1) * pageSize > allOrderCount) {
+            System.out.println("查询失败,请输入正确的页码和页面大小");
+            return null;
+        }
+        List<Order> orders = orderDao.sortOrderByUpdateTime(page, pageSize);
         return orders;
     }
 

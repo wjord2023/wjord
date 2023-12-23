@@ -16,11 +16,11 @@ public interface ProductService {
 
     Product selectProductByName(String productName);
 
-    List<Product> selectAllProducts();
+    List<Product> selectAllProducts(int page, int pageSize);
 
     int selectTotalProductCount();
 
-    List<Product> selectSortedProductByPrice();
+    List<Product> selectSortedProductByPrice(int page, int pageSize);
 
-    List<Product> selectSortedProductByUpdateTime();
+    List<Product> selectSortedProductByUpdateTime(int page, int pageSize);
 }

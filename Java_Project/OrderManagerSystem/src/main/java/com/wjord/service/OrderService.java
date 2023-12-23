@@ -14,7 +14,7 @@ public interface OrderService {
 
     Order selectOrder(String orderCode);
 
-    List<Order> selectAllOrders();
+    List<Order> selectAllOrders(int page, int pageSize);
 
     int selectTotalOrderCount();
 
@@ -24,13 +24,13 @@ public interface OrderService {
 
     int selectTotalOrderCountByBuyerPhone(String buyerPhone);
 
-    List<Order> selectOrdersByProductName(String productName);
+    List<Order> selectOrdersByProductName(String productName, int page, int pageSize);
 
-    List<Order> selectOrdersByProductCode(String productCode);
+    List<Order> selectOrdersByProductCode(String productCode, int page, int pageSize);
 
-    List<Order> selectOrdersByBuyerPhone(String buyerPhone);
+    List<Order> selectOrdersByBuyerPhone(String buyerPhone, int page, int pageSize);
 
-    List<Order> selectSortedOrderByPrice();
+    List<Order> selectSortedOrderByPrice(int page, int pageSize);
 
-    List<Order> selectSortedOrderByUpdateTime();
+    List<Order> selectSortedOrderByUpdateTime(int page, int pageSize);
 }

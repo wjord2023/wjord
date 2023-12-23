@@ -109,8 +109,9 @@ public class ProductServiceImpl implements ProductService {
             return;
         }
         if (selectProduct(productCode) != null) {
-            if (orderDao.selectOrdersByProductCode(productCode) != null) {
-                String string = orderDao.selectOrdersByProductCode(productCode).toString();
+            int allProductCount = productDao.selectTotalProductCount();
+            if (orderDao.selectOrdersByProductCode(productCode,1,allProductCount) != null) {
+                String string = orderDao.selectOrdersByProductCode(productCode,1,allProductCount).toString();
                 orderDao.deleteOrderByProductCode(productCode);
                 productDao.deleteProductByCode(productCode);
                 System.out.println("成功删除了一个产品以及其关联的订单信息:\n" + string);
@@ -148,8 +149,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> selectAllProducts() {
-        List<Product> selected = productDao.selectAllProducts();
+    public List<Product> selectAllProducts(int page, int pageSize) {
+        List<Product> selected = productDao.selectAllProducts(page, pageSize);
         return selected;
     }
 
@@ -160,14 +161,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> selectSortedProductByPrice() {
-        List<Product> selected = productDao.sortProductByPrice();
+    public List<Product> selectSortedProductByPrice(int page, int pageSize) {
+        List<Product> selected = productDao.sortProductByPrice(page, pageSize);
         return selected;
     }
 
     @Override
-    public List<Product> selectSortedProductByUpdateTime() {
-        List<Product> selected = productDao.sortProductByUpdatedTime();
+    public List<Product> selectSortedProductByUpdateTime(int page, int pageSize) {
+        List<Product> selected = productDao.sortProductByUpdatedTime(page, pageSize);
         return selected;
     }
 

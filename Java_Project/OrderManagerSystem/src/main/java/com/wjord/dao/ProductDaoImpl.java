@@ -62,9 +62,10 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public List<Product> selectAllProducts() {
-        String sql = "select product_code, product_name, product_price, product_stock, create_time, update_time from product_info";
-        return jdbcTemplate.query(sql, productMapper);
+    public List<Product> selectAllProducts(int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        String sql = "select product_code, product_name, product_price, product_stock, create_time, update_time from product_info limit ? offset ?";
+        return jdbcTemplate.query(sql, productMapper, pageSize, offset);
     }
 
     @Override
@@ -74,16 +75,18 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public List<Product> sortProductByPrice() {
-        String sql = "select product_code, product_name, product_price, product_stock, create_time, update_time from product_info order by product_price desc ";
-        List<Product> query = jdbcTemplate.query(sql, productMapper);
+    public List<Product> sortProductByPrice(int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        String sql = "select product_code, product_name, product_price, product_stock, create_time, update_time from product_info order by product_price desc limit ? offset ?";
+        List<Product> query = jdbcTemplate.query(sql, productMapper, pageSize, offset);
         return query.isEmpty() ? null : query;
     }
 
     @Override
-    public List<Product> sortProductByUpdatedTime() {
-        String sql = "select product_code, product_name, product_price, product_stock, create_time, update_time from product_info order by update_time desc ";
-        List<Product> query = jdbcTemplate.query(sql, productMapper);
+    public List<Product> sortProductByUpdatedTime(int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        String sql = "select product_code, product_name, product_price, product_stock, create_time, update_time from product_info order by update_time desc limit ? offset ?";
+        List<Product> query = jdbcTemplate.query(sql, productMapper, pageSize, offset);
         return query.isEmpty() ? null : query;
     }
 }

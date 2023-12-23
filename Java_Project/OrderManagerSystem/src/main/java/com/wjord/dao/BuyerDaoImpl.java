@@ -56,9 +56,10 @@ public class BuyerDaoImpl implements BuyerDao {
     }
 
     @Override
-    public List<Buyer> selectAllBuyers() {
-        String sql = "select buyer_phone, buyer_name, buyer_address, create_time, update_time from buyer_info";
-        return jdbcTemplate.query(sql, buyerMapper);
+    public List<Buyer> selectAllBuyers(int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        String sql = "select buyer_phone, buyer_name, buyer_address, create_time, update_time from buyer_info limit ? offset ?";;
+        return jdbcTemplate.query(sql, buyerMapper, pageSize, offset);
     }
 
     @Override

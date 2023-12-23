@@ -17,7 +17,7 @@ public interface BuyerDao {
 
     Buyer selectBuyerByPhone(String buyerPhone);
 
-    List<Buyer> selectAllBuyers();
+    List<Buyer> selectAllBuyers(int page, int pageSize);
 
     int selectTotalBuyerCount();
 

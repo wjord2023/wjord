@@ -11,7 +11,6 @@ import java.sql.SQLException;
 @Component
 public class ProductRowMapper implements RowMapper<Product>, Serializable {
 
-
     @Override
     public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
         Product product = new Product();

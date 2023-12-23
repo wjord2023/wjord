@@ -19,11 +19,11 @@ public interface ProductDao {
 
     Product selectProductByName(String productName);
 
-    List<Product> selectAllProducts();
+    List<Product> selectAllProducts(int page, int pageSize);
 
     int selectTotalProductCount();
 
-    List<Product> sortProductByPrice();
+    List<Product> sortProductByPrice(int page, int pageSize);
 
-    List<Product> sortProductByUpdatedTime();
+    List<Product> sortProductByUpdatedTime(int page, int pageSize);
 }
